@@ -834,8 +834,7 @@ setMethod(
         ## Expression sets
         orData <- Input
         if(!all(do.call("c",lapply(orData,FUN=class))=="ExpressionSet")){
-            warning("Please provide a list of expression sets")
-            return();
+            stop("Please provide a list of expression sets")
         }
         ## Converting expression sets list in matrices list
         Data <- lapply(orData,exprs)
@@ -847,8 +846,7 @@ setMethod(
         }
         ## Check is number of columns/samples is the same in all datasets
         if(length(unique(do.call("c",lapply(Data,FUN=ncol))))!=1){
-            warning("Number of samples is not the same for all data sets")
-            return();
+            stop("Number of samples is not the same for all data sets")
         }
         prepros <- NULL
         ## STEP2: Removing constant rows if any
