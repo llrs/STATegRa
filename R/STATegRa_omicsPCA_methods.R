@@ -780,10 +780,10 @@ setMethod(
 #' @aliases omicsCompAnalysis,list,character,character,numeric,numeric-method
 #' @description
 #' This function performs a components analysis of object wise omics data to understand the mechanisms that underlay all the data blocks under study (common mechanisms) and the mechanisms underlying each of the data block independently (distinctive mechanisms). This analysis include both, the preprocessing of data and the components analysis by using three different methodologies.
-#' @usage omicsCompAnalysis(Input, Names, method, Rcommon, Rspecific, 
-#'                          convThres=1e-10, maxIter=600, center=FALSE, 
+#' @usage omicsCompAnalysis(Input, Names, method, Rcommon, Rspecific,
+#'                          convThres=1e-10, maxIter=600, center=FALSE,
 #'                          scale=FALSE, weight=FALSE)
-#' 
+#'
 #' @param Input List of \code{ExpressionSet} objects, one for each block of data.
 #' @param Names Character vector giving names for each Input object.
 #' @param method Method to use for analysis (either "DISCOSCA", "JIVE", or "O2PLS").
@@ -794,11 +794,11 @@ setMethod(
 #' @param center Character (or FALSE) specifying which (if any) centering will be applied before analysis. Choices are "PERBLOCKS" (each block separately) or "ALLBLOCKS" (all data together).
 #' @param scale Character (or FALSE) specifying which (if any) scaling will be applied before analysis. Choices are "PERBLOCKS" (each block separately) or "ALLBLOCKS" (all data together).
 #' @param weight Logical indicating whether weighting is to be done.
-#' 
+#'
 #' @return An object of class \code{\link{caClass-class}}.
-#' 
+#'
 #' @author Patricia Sebastian Leon
-#' 
+#'
 #' @examples
 #' data("STATegRa_S3")
 #' B1 <- createOmicsExpressionSet(Data=Block1.PCA,pData=ed.PCA,
@@ -855,7 +855,7 @@ setMethod(
         Data <- lapply(Data,function(xx){
             index <- which(apply(xx,1,sd)==0)
             if(length(index)>0){
-                print(paste("The following features are eliminated because are constant:",length(index),"\n",paste(names(index),collapse=", ")))
+                message(paste("The following features are eliminated because are constant:",length(index),"\n",paste(names(index),collapse=", ")))
                 xx <- xx[-index,]
             }
             return(xx)
@@ -947,7 +947,7 @@ setMethod(
 #' @export
 #' @title Select common components in two data blocks
 #' @aliases selectCommonComps,matrix,matrix,numeric-method
-#' @description 
+#' @description
 #' This function applies a Simultaneous Component Analysis (SCA). The idea is that the scores for both blocks should have a similar behaviour if the components are in the common mode. Evaluation is by the ratios between the explained variances (SSQ) of each block and the estimator. The highest component count with 0.8 < ratio < 1.5 is selected.
 #' @usage selectCommonComps(X, Y, Rmax)
 #' @param X Matrix of omics data
@@ -1050,7 +1050,7 @@ setMethod(
 #' @export
 #' @title Select an optimal number of components using PCA
 #' @aliases PCA.selection,matrix,character-method
-#' @description 
+#' @description
 #' Selects the optimal number of components from data using PCA. There are four different criteria available: accumulated variance explained, individual explained variance of each component, absolute value of variability or fixed number of components.
 #' @usage PCA.selection(Data, fac.sel, varthreshold=NULL, nvar=NULL, PCnum=NULL)
 #' @param Data Data matrix (with samples in columns and features in rows)
@@ -1064,7 +1064,7 @@ setMethod(
 #'      \item{numComps}{Number of components selected}
 #' }
 #' @author Patricia Sebastian Leon
-#' @examples 
+#' @examples
 #' data(STATegRa_S3)
 #' ps <- PCA.selection(Data=Block2.PCA, fac.sel="single%", varthreshold=0.03)
 #' ps$numComps
@@ -1113,7 +1113,7 @@ setMethod(
 #' @export
 #' @title Find optimal common and distinctive components
 #' @aliases modelSelection,list,numeric,character-method
-#' @description 
+#' @description
 #' Uses \code{\link{selectCommonComps}} and \code{\link{PCA.selection}} to estimate the optimal number of common and distinctive components according to given selection criteria.
 #' @usage modelSelection(Input, Rmax, fac.sel, varthreshold=NULL, nvar=NULL, PCnum=NULL)
 #' @param Input List of two ExpressionSet objects
